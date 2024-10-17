@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoyoWeb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the PoyoWeb!</h1>
+    <h2>List of Websites (JSON Format)</h2>
+    <pre id="json-output">Loading...</pre> <!-- This will display the JSON string -->
+
+    <script>
+        function fetchWebsites() {
+            fetch('/discover')
+                .then(response => {
+                    console.log('Response status:', response.status); // Log the response status
+                    return response.json(); // Parse the JSON
+                })
+                .then(data => {
+                    const jsonOutput = document.getElementById('json-output');
+                    jsonOutput.textContent = JSON.stringify(data, null, 2); // Display JSON
+                })
+                .catch(error => {
+                    const jsonOutput = document.getElementById('json-output');
+                    jsonOutput.textContent = `Failed to load websites: ${error.message}`; // Display error
+                    console.error('Fetch error:', error); // Log the error
+                });
+        }
+
+        window.onload = fetchWebsites; // Fetch websites on page load
+    </script>
+</body>
+</html>
